@@ -175,14 +175,19 @@ function showAlert(customMessage,type="success") {
   }, 2000);
 }
 
-function getCurrentUser(){
-  let user= null
-  const storageUser= localStorage.getItem("user")
-  if(storageUser !=null){
-    user= JSON.parse(storageUser)
+function getCurrentUser() {
+  let user = null;
+  const storageUser = localStorage.getItem("user");
+  if (storageUser != null) {
+    try {
+      user = JSON.parse(storageUser);
+    } catch (error) {
+      console.error("Error parsing user data:", error);
+    }
   }
-  return user
+  return user;
 }
+
 
 function editpostBtnClicked(postObject){
   let post= JSON.parse(decodeURIComponent(postObject))

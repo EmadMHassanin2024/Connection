@@ -7,9 +7,9 @@ window.addEventListener("scroll",function(){
 //boleen هل المستخدم الى نهاية الصفحة من عدمه""التغير العمودي ويقارنه بطول الصفحة"
 
 const endOfpage = window.innerHeight + window.scrollY >= document.body.scrollHeight;
+ console.log(window.innerHeight ,window.scrollY, document.body.scrollHeight)
 
-
-//console.log(endOfpage, currentpage ,Lastpage )
+ 
 if(endOfpage&& currentpage< Lastpage){
  currentpage=currentpage+1
  //استدعاء البوستات
@@ -34,7 +34,7 @@ document.getElementById("posts").innerHTML=""
 }
 
  for(post of Posts){
-   console.log(Posts);
+   //console.log(Posts);
    const author= post.author
   let PosstTitle= ""
  
