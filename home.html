@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #ecedf0;
+        }
+
+        .card{
+          margin-top: 10px;
+
+        }
+        .card-body img {
+              display: block;
+              margin: 10px 0; /* مسافة بين الصورة وبقية المحتوى */
+              width: 100%;
+                         }
+
+          .card-body h5 {
+            margin-top: 10px;
+          }
+
+          .card-body p {
+            margin-top: 10px;
+          }
+        #add-button{
+          position: fixed;
+          bottom: 5%;
+          right: 7%;
+          height: 70;
+          width: 70;
+          font-size: 50px;
+          color: white;
+          border-radius: 100px;
+          text-align: center;
+          cursor: pointer;
+          box-shadow: 0px 10px 10px rgb(0, 0, 0,0.3);
+         
+        }
+         /* Loader */
+                  
+          .lds-spinner,
+          .lds-spinner div,
+          .lds-spinner div:after {
+            box-sizing: border-box;
+          }
+          .lds-spinner {
+            color: rgb(55, 0, 255);
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+          }
+          .lds-spinner div {
+            transform-origin: 40px 40px;
+            animation: lds-spinner 1.2s linear infinite;
+          }
+          .lds-spinner div:after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 3.2px;
+            left: 36.8px;
+            width: 6.4px;
+            height: 17.6px;
+            border-radius: 20%;
+            background: currentColor;
+          }
+          .lds-spinner div:nth-child(1) {
+            transform: rotate(0deg);
+            animation-delay: -1.1s;
+          }
+          .lds-spinner div:nth-child(2) {
+            transform: rotate(30deg);
+            animation-delay: -1s;
+          }
+          .lds-spinner div:nth-child(3) {
+            transform: rotate(60deg);
+            animation-delay: -0.9s;
+          }
+          .lds-spinner div:nth-child(4) {
+            transform: rotate(90deg);
+            animation-delay: -0.8s;
+          }
+          .lds-spinner div:nth-child(5) {
+            transform: rotate(120deg);
+            animation-delay: -0.7s;
+          }
+          .lds-spinner div:nth-child(6) {
+            transform: rotate(150deg);
+            animation-delay: -0.6s;
+          }
+          .lds-spinner div:nth-child(7) {
+            transform: rotate(180deg);
+            animation-delay: -0.5s;
+          }
+          .lds-spinner div:nth-child(8) {
+            transform: rotate(210deg);
+            animation-delay: -0.4s;
+          }
+          .lds-spinner div:nth-child(9) {
+            transform: rotate(240deg);
+            animation-delay: -0.3s;
+          }
+          .lds-spinner div:nth-child(10) {
+            transform: rotate(270deg);
+            animation-delay: -0.2s;
+          }
+          .lds-spinner div:nth-child(11) {
+            transform: rotate(300deg);
+            animation-delay: -0.1s;
+          }
+          .lds-spinner div:nth-child(12) {
+            transform: rotate(330deg);
+            animation-delay: 0s;
+          }
+          @keyframes lds-spinner {
+            0% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 0;
+            }
+          }
+   /* =================Loader Style=============== */
+
+    </style>
+</head>
+<!--import scripts and styles -->
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="Stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+<script src="./node_modules/axios/dist/axios.min.js"></script>
+<body>
+<!--Loader Html -->
+<div style="position: fixed; background-color: rgba(128, 128, 128, 0.055); top: 0px; bottom: 0px; left: 0px; right: 0px; margin: auto auto; display: flex;justify-content: center; align-items: center;z-index: 9999;width: 100px;height: 100px; border-radius: 20px;">
+<div  id="loader" class="lds-spinner" >
+  <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+</div>
+<!--//Loader Html //-->
+<!--Modal-->
+    <!--Login Modal-->
+  <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Log IN </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">User Name</label>
+              <input type="text" class="form-control" id="userName-input" value="Omar emad">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Pasword</label>
+              <input type="password" class="form-control" id="password-input" value="123456">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+       
+          <button type="button" class="btn btn-primary"  onclick="Logbtnclick()">Log In</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Register</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!--// Login //-->
+
+
+<!-- Register Modal-->
+<div class="modal fade" id="RegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Register</h1>
+      </div> <!-- تم إغلاق modal-header -->
+      <div class="modal-body">
+        <form>
+
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Profile Image:</label>
+            <input type="file" class="form-control" id="register-Image-input" value="Yarob99">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"> Name:</label>
+            <input type="text" class="form-control" id="register-Name-input" value="Yarob99">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">User Name</label>
+            <input type="text" class="form-control" id="register-userName-input" value="Yarob99">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">password:</label>
+            <input type="password" class="form-control" id="register-password-input" value="123456">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="RegistebtnClicked()">Register</button>
+        <button type="button" class="btn btn-primary"id="closeBtn" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--// Register Modal // -->
+
+<!-- ===Creat Post  Modal===-->
+<div class="modal fade" id="Creat-Post-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="post-modal-title">Creat A New Post</h1>
+      </div> <!-- تم إغلاق modal-header -->
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"> Title</label>
+            <input type="text" class="form-control" id="Post-input" value="">
+           <input type="hidden"  id="post-id-input" value=""/>
+          </div>
+         <div class="mb-3">
+        
+          <textarea id="body-input" style="width: 100%; height: 100px; border-color: gray; resize: none;">
+           
+          </textarea>
+        </div>
+        <div class="mb-3">
+          <label for="recipient-name" class="col-form-label">Image</label>
+          <input type="file" class="form-control" id="Post-image-input" >
+        </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+      
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        <button id="post-modal-submit-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CreatAnewPostClicked()" >Creat</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--// Creat Post  Modal // -->
+
+<!-- ===Delete  Modal===-->
+<div class="modal fade" id="Delete-Post-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="post-modal-title"> Are You Sure Delete The Post
+          <span id="delete-post-title"></span>
+        </h1>
+        <input type="hidden" id="delet-post-id-input" value=""/>
+      </div> <!-- تم إغلاق modal-header -->
+      
+      <div class="modal-footer">
+      
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        <button id="post-modal-submit-btn" type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="ConfirmPostDelete()">Yes Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--// Delete Post  Modal // -->
+  <!--// Modal//-->
+
+<!--==================Add New Post button =================-->
+<div class="bg-primary" id="add-button" onclick="addbtnClick()">
+  +
+</div>
+
+<!--//==================Add New Post button// =================-->
+  <!--Alert-->
+  <div id="SuccessAlert" class="show fade " style="position: fixed; z-index: 999999; width:30% ;bottom: 0;"></div>
+  <!--Navigation Bar-->
+ <div class="container ">
+    <div class="d-flex justify-content-center">
+    <div class="col-9" >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow rounded pt-3">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./home.html">Friend Circle</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="profileClicked()" style="cursor: pointer;">Profile</a>
+              </li>
+      
+             
+            </ul>
+            <!--non Login in user-->
+            <div class="d-flex w-100 justify-content-end " id="logged-in-div">
+            <button id="login-btn" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal"  class="btn btn-outline-success mx-2">LogIn</button>
+            <button id="regiser-btn" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal" class="btn btn-outline-success">Register</button>
+         
+                <!--///non logged in user///-->
+          </div>
+          <!--non logged in user-->
+          <div class="d-flex w-100 justify-content-end" id="logout-div">
+            <img  id="nav-user-image" class="rounded-circle" style="width: 40px; height: 40px;" src="./ProfilePictuer/1.jpg" alt=""/>
+            <p id="nav-username">
+              @Yarroop
+            </p>  
+            <button onclick="logout()" id="logout-btn" type="button"  class="btn btn-outline-danger mx-2">Logout</button>
+          </div>
+            <!--//non Login in user//-->
+
+              <!--for  Logoin   in user-->
+
+             
+
+               <!--//for  Login in user//-->
+          </div>
+        
+        </div>
+      </nav>
+    </div>
+</div>
+ </div>
+       <!--//Navigation bar//-->
+ 
+   <div class="container "  style="height: 1000px;">
+        <!--Posts-->
+       <div class="d-flex justify-content-center mt-5"  >
+    <div class="col-9" >
+      <!--Posts-->
+        <div id="posts">
+
+            <div class="card  shadow " >
+                <div class="card-header">
+                  <img  class="rounded-circle border border-2" src="./ProfilePictuer/1.jpg" style="height: 40px; width: 40px;"/>
+                <b>Emad@Gmail.com</b>
+                </div>
+                <div class="card-body">
+                    <img style="width: 100%;"  src="./PlacHolder/1.jpg" />
+                <h6 style="color: rgb(193,193,193);" class="mt-1">
+                   2 min ago
+                </h6>
+               <h5>
+                hello word
+               </h5>
+               <p id="PostHtml">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eos placeat ipsa iure! Unde voluptate aliquid autem, itaque labore dolorem consequatur minus, et odit recusandae rerum reprehenderit sed, voluptatibus quam.
+               </p>
+               <hr/>
+               <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                  </svg>
+                <span>
+                    3 comments
+                </span>
+            </div>
+                </div>
+              
+              </div>
+              <div class="card  shadow " >
+                <div class="card-header">
+                  <img  class="rounded-circle border border-2" src="./ProfilePictuer/1.jpg" style="height: 40px; width: 40px;"/>
+                <b>Emad@Gmail.com</b>
+                </div>
+                <div class="card-body">
+                    <img style="width: 100%;"  src="./PlacHolder/1.jpg" />
+                <h6 style="color: rgb(193,193,193);" class="mt-1">
+                   2 min ago
+                </h6>
+               <h5>
+                hello word
+               </h5>
+               <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eos placeat ipsa iure! Unde voluptate aliquid autem, itaque labore dolorem consequatur minus, et odit recusandae rerum reprehenderit sed, voluptatibus quam.
+               </p>
+               <hr/>
+               <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                  </svg>
+                <span>
+                    3 comments
+                </span>
+            </div>
+                </div>
+              
+              </div>
+              <div class="card  shadow " >
+                <div class="card-header">
+                  <img  class="rounded-circle border border-2" src="./ProfilePictuer/1.jpg" style="height: 40px; width: 40px; "/>
+              
+                <b>Emad@Gmail.com</b>
+                </div>
+                <div class="card-body">
+                    <img style="width: 100%;"  src="./PlacHolder/1.jpg" />
+                <h6 style="color: rgb(193,193,193);" class="mt-1">
+                   2 min ago
+                </h6>
+               <h5>
+                hello word
+               </h5>
+               <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eos placeat ipsa iure! Unde voluptate aliquid autem, itaque labore dolorem consequatur minus, et odit recusandae rerum reprehenderit sed, voluptatibus quam.
+               </p>
+               <hr/>
+               <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                  </svg>
+                <span>
+                    3 comments
+                </span>
+            </div>
+                </div>
+                <div class="card  shadow " >
+                  <div class="card-header">
+                    <img  class="rounded-circle border border-2" src="./ProfilePictuer/1.jpg" style="height: 40px; width: 40px;"/>
+                  <b>Emad@Gmail.com</b>
+                  </div>
+                  <div class="card-body">
+                      <img style="width: 100%;"  src="./PlacHolder/1.jpg" />
+                  <h6 style="color: rgb(193,193,193);" class="mt-1">
+                     2 min ago
+                  </h6>
+                 <h5>
+                  hello word
+                 </h5>
+                 <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eos placeat ipsa iure! Unde voluptate aliquid autem, itaque labore dolorem consequatur minus, et odit recusandae rerum reprehenderit sed, voluptatibus quam.
+                 </p>
+                 <hr/>
+                 <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                    </svg>
+                  <span>
+                      3 comments
+                  </span>
+              </div>
+                  </div>
+                
+                </div>
+                <div class="card  shadow " >
+                  <div class="card-header">
+                    <img  class="rounded-circle border border-2" src="./ProfilePictuer/1.jpg" style="height: 40px; width: 40px;"/>
+                  <b>Emad@Gmail.com</b>
+                  </div>
+                  <div class="card-body">
+                      <img style="width: 100%;"  src="./PlacHolder/1.jpg" />
+                  <h6 style="color: rgb(193,193,193);" class="mt-1">
+                     2 min ago
+                  </h6>
+                 <h5>
+                  hello word
+                 </h5>
+                 <p id="posts">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi eos placeat ipsa iure! Unde voluptate aliquid autem, itaque labore dolorem consequatur minus, et odit recusandae rerum reprehenderit sed, voluptatibus quam.
+                 </p>
+                 <hr/>
+                 <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                    </svg>
+                  <span>
+                      3 comments
+                  </span>
+              </div>
+                  </div>
+                
+                </div>
+              </div>
+        </div>
+              <!--//Posts//-->
+  </div>
+  </div>
+        <!--Post-->
+   </div>
+</body>
+
+<script src="./mainLogic.js"></script>
+<script src="./homeScript.js"></script>
+</html>
+
+<!-- 1- npm int // to down load package.json
+ 
+
+npm install bootstrap@5.3.3-->
